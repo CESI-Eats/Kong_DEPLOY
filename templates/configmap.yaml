@@ -9,7 +9,7 @@ data:
     _transform: true
 
     services:
-    - host: identity-service.cesi-eats.svc.cluster.local
+    - host: identity-api-service.cesi-eats.svc.cluster.local
       name: identity_service
       port: 3000
       protocol: http
@@ -23,7 +23,7 @@ data:
         - /identity-doc
         strip_path: false
 
-    - host: main-bff.cesi-eats.svc.cluster.local
+    - host: main-bff-service.cesi-eats.svc.cluster.local
       name: bff
       port: 3000
       protocol: http
@@ -40,7 +40,7 @@ data:
             claims_to_verify:
             - exp
 
-    - host: websocket-service.cesi-eats.svc.cluster.local
+    - host: websocket-server-service.cesi-eats.svc.cluster.local
       name: websocket
       port: 3000
       protocol: http
