@@ -1,0 +1,7 @@
+apiVersion: v2
+name: kong-chart
+version: 1.0.7
+description: Helm chart to deploy Kong API Gateway
+maintainers:
+  - name: Guillaume Miot
+    email: guillaume.miot@viacesi.fr

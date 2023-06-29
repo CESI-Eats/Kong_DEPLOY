@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kong-config
+  namespace: kong
+data:
+  kong.yaml: |
+    _format_version: "3.0"
+    _transform: true
+
+    services:
+    - host: identity-service.cesi-eats.svc.cluster.local
+      name: identity_service
+      port: 3000
+      protocol: http
+      routes:
+      - name: identity_route
+        paths:
+        - /identity
+        strip_path: true
+      - name: identity_doc_route
+        paths:
+        - /identity-doc
+        strip_path: false
+
+    - host: main-bff.cesi-eats.svc.cluster.local
+      name: bff
+      port: 3000
+      protocol: http
+      routes:
+      - name: bff_route
+        paths:
+        - /bff
+        strip_path: true
+        plugins:
+        - name: jwt
+          enabled: true
+          config:
+            key_claim_name: kid
+            claims_to_verify:
+            - exp
+
+    - host: websocket-service.cesi-eats.svc.cluster.local
+      name: websocket
+      port: 3000
+      protocol: http
+      routes:
+      - name: websocket_route
+        paths:
+        - /socket.io
+        strip_path: false
+        protocols:
+        - http
+        - https
+
+    consumers:
+    - username: identity_server
+      jwt_secrets:
+      - key: "pKtzQAeUDbhtz2wZuY2ocX6gxJ3CTWkl"
+        algorithm: HS256
+        secret: "mysecret"
