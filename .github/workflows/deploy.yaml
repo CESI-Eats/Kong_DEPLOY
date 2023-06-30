@@ -14,4 +14,4 @@ jobs:
 
       - name: Helm Upgrade
         run: |
-          helm upgrade kong-gateway ./ --install --namespace kong --create-namespace
+          helm upgrade kong-gateway ./ --install --namespace kong --create-namespace --recreate-pods
